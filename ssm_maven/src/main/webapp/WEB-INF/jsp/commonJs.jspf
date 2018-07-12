@@ -1,0 +1,4 @@
+ 	<!-- 全局js -->
+    <script src="${pageContext.request.contextPath}/assets/templetHtml/js/jquery.min.js?v=2.1.4"></script>
+    <script src="${pageContext.request.contextPath}/assets/templetHtml/js/bootstrap.min.js?v=3.3.6"></script>
+	<script src="${pageContext.request.contextPath}/assets/templetHtml/layer/layer.js"></script>

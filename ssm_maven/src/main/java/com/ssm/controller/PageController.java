@@ -1,7 +1,11 @@
 package com.ssm.controller;
 
 
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ssm.entity.FileEntity;
+import com.ssm.entity.User;
 import com.ssm.service.IExcelService;
 import com.ssm.utils.PathUtil;
 
@@ -60,7 +65,7 @@ public class PageController {
 				excelMap.put("N3", new FileEntity(false));
 				excelMap.put("N5", new FileEntity(false));
 				excelMap.put("N6", new FileEntity(false));
-				List<FileEntity> feList = excelService.query();
+				List<FileEntity> feList = excelService.queryList();
 				for(FileEntity fe:feList){
 					if(excelMap.containsKey(fe.getUpName())){
 						fe.setUpFlag(true);
@@ -69,6 +74,23 @@ public class PageController {
 					}
 				}
 				mv.addObject("shopMap",excelMap);
+				
+				User u = (User) req.getSession().getAttribute("user");
+				DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+				FileEntity fe = null;
+				if(StringUtils.equals("admin", u.getUsername())){
+					fe = excelService.queryCount();
+					if(fe!=null){
+						DecimalFormat dfMath = new DecimalFormat("#.00");
+						fe.setTotalActual(dfMath.format(fe.getActual()));
+						fe.setTotalExpect(dfMath.format(fe.getExpect()));
+						fe.setCountNum(fe.getNum());
+					}
+				}else{
+					fe = excelService.queryEntity(u.getUsername(), df.format(new Date()));
+				}
+				if(null!=fe)
+					mv.addObject("shop", fe);
 			}
 		}
 		return mv;

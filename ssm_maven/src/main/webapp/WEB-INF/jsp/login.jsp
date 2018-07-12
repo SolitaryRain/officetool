@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <title>用户登录</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
-    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <%@ include  file="commonJs.jspf"%>
+    
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/login.css">
@@ -42,8 +42,6 @@
             </div>
         </div>
     </div>
-    
-    <script src="${pageContext.request.contextPath}/assets/templetHtml/layer/layer.js"></script>
     
     <script type="text/javascript">
     function register(){

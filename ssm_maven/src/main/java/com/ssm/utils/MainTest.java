@@ -20,13 +20,11 @@ public class MainTest {
 	 */
 	public static void main(String[] args) {
 	          
+		float a = Float.parseFloat("aaa100");
+		
 		File file = new File("HelloWorld.java");
         String fileName = file.getName();
-        String suffix = fileName.substring(fileName.lastIndexOf(".") );
-        PathUtil pu = new PathUtil();
-        System.out.println(PathUtil.getWebDriveDir()); 
-        System.out.println(PathUtil.getWebLocDir()); 
-        System.out.println(PathUtil.getWebLocPath()); 
-        System.out.println(PathUtil.getWebName()); 
+        String suffix = fileName.substring(0,fileName.lastIndexOf("."));
+        System.out.println(a);
 	    }  
 }

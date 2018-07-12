@@ -533,6 +533,216 @@ public class FileEntityExample {
             addCriterion("up_time not between", value1, value2, "upTime");
             return (Criteria) this;
         }
+
+        public Criteria andCountNumIsNull() {
+            addCriterion("count_num is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCountNumIsNotNull() {
+            addCriterion("count_num is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCountNumEqualTo(String value) {
+            addCriterion("count_num =", value, "countNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andCountNumNotEqualTo(String value) {
+            addCriterion("count_num <>", value, "countNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andCountNumGreaterThan(String value) {
+            addCriterion("count_num >", value, "countNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andCountNumGreaterThanOrEqualTo(String value) {
+            addCriterion("count_num >=", value, "countNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andCountNumLessThan(String value) {
+            addCriterion("count_num <", value, "countNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andCountNumLessThanOrEqualTo(String value) {
+            addCriterion("count_num <=", value, "countNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andCountNumLike(String value) {
+            addCriterion("count_num like", value, "countNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andCountNumNotLike(String value) {
+            addCriterion("count_num not like", value, "countNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andCountNumIn(List<String> values) {
+            addCriterion("count_num in", values, "countNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andCountNumNotIn(List<String> values) {
+            addCriterion("count_num not in", values, "countNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andCountNumBetween(String value1, String value2) {
+            addCriterion("count_num between", value1, value2, "countNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andCountNumNotBetween(String value1, String value2) {
+            addCriterion("count_num not between", value1, value2, "countNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalActualIsNull() {
+            addCriterion("total_actual is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalActualIsNotNull() {
+            addCriterion("total_actual is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalActualEqualTo(String value) {
+            addCriterion("total_actual =", value, "totalActual");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalActualNotEqualTo(String value) {
+            addCriterion("total_actual <>", value, "totalActual");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalActualGreaterThan(String value) {
+            addCriterion("total_actual >", value, "totalActual");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalActualGreaterThanOrEqualTo(String value) {
+            addCriterion("total_actual >=", value, "totalActual");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalActualLessThan(String value) {
+            addCriterion("total_actual <", value, "totalActual");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalActualLessThanOrEqualTo(String value) {
+            addCriterion("total_actual <=", value, "totalActual");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalActualLike(String value) {
+            addCriterion("total_actual like", value, "totalActual");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalActualNotLike(String value) {
+            addCriterion("total_actual not like", value, "totalActual");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalActualIn(List<String> values) {
+            addCriterion("total_actual in", values, "totalActual");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalActualNotIn(List<String> values) {
+            addCriterion("total_actual not in", values, "totalActual");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalActualBetween(String value1, String value2) {
+            addCriterion("total_actual between", value1, value2, "totalActual");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalActualNotBetween(String value1, String value2) {
+            addCriterion("total_actual not between", value1, value2, "totalActual");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalExpectIsNull() {
+            addCriterion("total_expect is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalExpectIsNotNull() {
+            addCriterion("total_expect is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalExpectEqualTo(String value) {
+            addCriterion("total_expect =", value, "totalExpect");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalExpectNotEqualTo(String value) {
+            addCriterion("total_expect <>", value, "totalExpect");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalExpectGreaterThan(String value) {
+            addCriterion("total_expect >", value, "totalExpect");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalExpectGreaterThanOrEqualTo(String value) {
+            addCriterion("total_expect >=", value, "totalExpect");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalExpectLessThan(String value) {
+            addCriterion("total_expect <", value, "totalExpect");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalExpectLessThanOrEqualTo(String value) {
+            addCriterion("total_expect <=", value, "totalExpect");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalExpectLike(String value) {
+            addCriterion("total_expect like", value, "totalExpect");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalExpectNotLike(String value) {
+            addCriterion("total_expect not like", value, "totalExpect");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalExpectIn(List<String> values) {
+            addCriterion("total_expect in", values, "totalExpect");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalExpectNotIn(List<String> values) {
+            addCriterion("total_expect not in", values, "totalExpect");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalExpectBetween(String value1, String value2) {
+            addCriterion("total_expect between", value1, value2, "totalExpect");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalExpectNotBetween(String value1, String value2) {
+            addCriterion("total_expect not between", value1, value2, "totalExpect");
+            return (Criteria) this;
+        }
     }
 
     /**

@@ -1,27 +1,16 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%
-String path = request.getContextPath();
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-%>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
-    <base href="<%=basePath%>">
     
     <title>首页</title>
-    
-	<meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-	<meta http-equiv="description" content="This is my page">
-	
-	<link rel="shortcut icon" href="favicon.ico">
-	<link href="${pageContext.request.contextPath}/assets/templetHtml/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/templetHtml/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/templetHtml/css/animate.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/templetHtml/css/style.css?v=4.1.0" rel="stylesheet">
+	<meta http-equiv="description" content="Excel">
+	<%@ include  file="commonCss.jspf"%>
     <link href="${pageContext.request.contextPath}/assets/templetHtml/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
 
   </head>
@@ -100,8 +89,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
 
     <!-- 全局js -->
-    <script src="${pageContext.request.contextPath}/assets/templetHtml/js/jquery.min.js?v=2.1.4"></script>
-    <script src="${pageContext.request.contextPath}/assets/templetHtml/js/bootstrap.min.js?v=3.3.6"></script>
+    <%@ include  file="commonJs.jspf"%>
     <script src="${pageContext.request.contextPath}/assets/templetHtml/js/plugins/metisMenu/jquery.metisMenu.js"></script>
     <script src="${pageContext.request.contextPath}/assets/templetHtml/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 
@@ -111,7 +99,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
     <!-- 第三方插件 -->
     <script src="${pageContext.request.contextPath}/assets/templetHtml/js/plugins/pace/pace.min.js"></script>
-    <script src="${pageContext.request.contextPath}/assets/templetHtml/layer/layer.js"></script>
     <script src="${pageContext.request.contextPath}/assets/templetHtml/js/plugins/sweetalert/sweetalert.min.js"></script>
     
     
@@ -188,11 +175,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 success: function (data) {                  
                     //关闭
                     window.location.href = "/exceldev/excel/download";
-                    layer.msg("处理完毕");
+                    layer.msg("处理完毕,共合并"+data.fileNum+"个文件");
             		layer.close(index);  
                 },
-                error: function (data){
-            	}
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                	swal({ 
+          			  type:"warning",
+       				  title: "按错了吧？", 
+       				  text: "没有找到需要合并的文件", 
+       				  timer: 5000, 
+       				  showConfirmButton: false 
+       				});
+             		layer.close(index); 
+                }
             });      
     	}
     </script>

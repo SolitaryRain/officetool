@@ -10,9 +10,8 @@
         <!-- 注意以下标签的顺序:property*,plugin*,commentGenerator?,jdbcConnection,
                 javaTypeResolver?,javaModelGenerator,sqlMapGenerator?,
                 javaClientGenerator?,table+ -->
-        <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
-        <!-- 这个插件给由MBG生成的Java模型对象增加了equals和hashCode方法 -->
-        <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"/>
+        <!-- 这个插件给由MBG生成的Java模型对象增加了equals和hashCode方法
+        <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"/> -->
         <commentGenerator>
             <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
             <property name="suppressAllComments" value="false"/>

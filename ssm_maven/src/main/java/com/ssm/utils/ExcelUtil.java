@@ -26,6 +26,8 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import com.ssm.entity.FileEntity;
+
 public class ExcelUtil {
 	
 	private static String ROOTPATH = PathUtil.getWebDriveDir()+ File.separator+PathUtil.EXCELFOLDERPATH+ File.separator;
@@ -38,7 +40,7 @@ public class ExcelUtil {
 	 * 合并Excel
 	 * @throws Exception
 	 */
-	public static void mergeExcel(String folderPath) throws Exception{
+	public static int mergeExcel(String folderPath) throws Exception{
 		//生成countSheet
 		XSSFWorkbook newExcelCreat = new XSSFWorkbook(); 
 		Sheet  newSheet = newExcelCreat.createSheet("count");
@@ -46,6 +48,9 @@ public class ExcelUtil {
         File dirFile = new File(ROOTPATH+folderDf.format(new Date()));  
         //获取该目录下的所有文件  
         String[] fileNameList = dirFile.list();
+        if(fileNameList==null||fileNameList.length==0)
+        	throw new NullPointerException("没有上传文件");
+        int fileSize = fileNameList.length;
 		for(String fromExcelName:fileNameList) {//遍历每个源excel文件，fileNameList为源文件的名称集合
 		     InputStream in = new FileInputStream(ROOTPATH+folderDf.format(new Date())+ File.separator+fromExcelName);
 		     XSSFWorkbook fromExcel = new XSSFWorkbook(in);
@@ -64,6 +69,7 @@ public class ExcelUtil {
 		         file.delete();
 		     } 
 		 }*/
+		 return fileSize;
 	}
 	
 	/**
@@ -171,10 +177,12 @@ public class ExcelUtil {
     }
 
     /**
-     * 求和平均数计算
+     * 求和平均计算
+     * @param filePath
+     * @return 要保存的实体类，已获得总计数据
      * @throws IOException
      */
-	public static void calculateAvg(String filePath) throws IOException {
+	public static FileEntity calculateAvg(String filePath) throws IOException {
 		//保留两位小数
 		DecimalFormat decimalFormat = new DecimalFormat(".000");
 		InputStream in = new FileInputStream(ROOTPATH+File.separator+folderDf.format(new Date())+ File.separator +filePath);
@@ -221,18 +229,29 @@ public class ExcelUtil {
         //处理合并的单元格计算
         
 	    for (int i = 0; i < num; i++) {
-	    	try{
-	            cellR = sheet.getMergedRegion(i);
-	            int columnNum = cellR.getFirstColumn();
-	            int firstRow = cellR.getFirstRow();
-	            int lastRow = cellR.getLastRow();
+            cellR = sheet.getMergedRegion(i);
+            int columnNum = cellR.getFirstColumn();
+            int firstRow = cellR.getFirstRow();
+            int lastRow = cellR.getLastRow();
+            try{
 	            if(columnNum==10){
+	            	
 	            	int colNum = cellR.getLastRow() - firstRow +1;
 	            	Row fRow = sheet.getRow(firstRow);
 					Cell fCell_10 = fRow.getCell(columnNum);
 					Cell fCell_14 = fRow.getCell(columnNum+4);
-					float  countValue_10 = Float.parseFloat(getCellValue(fCell_10));
-					float  countValue_14 = Float.parseFloat(getCellValue(fCell_14));
+					if((firstRow+1)==45){
+	            		System.out.println("数据"+getCellValue(fCell_14));
+	            	}
+					String countValue_10_Str =  getCellValue(fCell_10);
+					if(StringUtils.isBlank(countValue_10_Str))
+						throw new NumberFormatException("总金额(K列)");
+					float  countValue_10 = Float.parseFloat(countValue_10_Str);
+					
+					String countValue_14_Str =  getCellValue(fCell_14);
+					if(StringUtils.isBlank(countValue_14_Str))
+						throw new NumberFormatException("预计金额(O列)");
+					float  countValue_14 = Float.parseFloat(countValue_14_Str);
 					float countNum = 0;
 					float avgValue_10 ; 
 					float avgValue_14 ; 
@@ -262,14 +281,13 @@ public class ExcelUtil {
 					}
 	            }
 	        }catch(NumberFormatException e){
-	    		String errorMsg ="未知异常信息"+e.getMessage();
+	        	String errorMsg= "表格总行数为:"+rowNum+",第"+(firstRow+1)+"行"+e.getMessage()+"数据不能为空值";
 	    		if(StringUtils.contains(e.getMessage(), ":"))
 	    			errorMsg= "第"+i+"行的数据"+e.getMessage().substring(e.getMessage().lastIndexOf(":"))+"不符合要求";
-	    		if(StringUtils.contains(e.getMessage(), "empty"))
-	    			errorMsg= "表格总行数为:"+rowNum+",第"+(i+1)+"行的数据出现空值不符合要求";
+	    		e.printStackTrace();
 	    		throw new NumberFormatException(errorMsg);
 	    	}catch(NullPointerException e){
-	    		String errorMsg = "第"+(i+1)+"行的数据不符合要求,有单元格为空值";
+	    		String errorMsg = "第"+(firstRow+1)+"行的数据不能为空值";
 	    		e.printStackTrace();
 	    		throw new NullPointerException(errorMsg);
 	    	}
@@ -312,6 +330,10 @@ public class ExcelUtil {
 		    		continue;
 		    	}
 		    	
+		    	if(singleValue_10==0)
+		    		throw new NullPointerException("总金额(K列)");
+		    	if(singleValue_14==0)
+		    		throw new NullPointerException("预计金额(O列)");
 		    	
 				Cell cell = sheet.getRow(i).getCell(9);
 				if(cell==null)
@@ -327,21 +349,23 @@ public class ExcelUtil {
 	    		if(StringUtils.contains(e.getMessage(), ":"))
 	    			errorMsg= "第"+(i+1)+"行的数据"+e.getMessage().substring(e.getMessage().lastIndexOf(":"))+"不符合要求";
 	    		if(StringUtils.contains(e.getMessage(), "empty"))
-	    			errorMsg= "表格总行数为:"+rowNum+",第"+(i+1)+"行的数据出现空值不符合要求";
+	    			errorMsg= "表格总行数为:"+rowNum+",第"+(i+1)+"行的数据不能为空值";
 	    		e.printStackTrace();
 	    		throw new NumberFormatException(errorMsg);
 	    	}catch(NullPointerException e){
-	    		String errorMsg = "第"+(i+1)+"行的数据不符合要求,有单元格为空值";
+	    		String errorMsg = "第"+(i+1)+"行的"+e.getMessage()+"数据不能为空值";
 	    		throw new NullPointerException(errorMsg);
 	    	}
 	    }
 	    
 	    //处理最后一行总计
+	    FileEntity fileEntity = new FileEntity();
 	    Row row = sheet.getRow(rowNum);
-	    Cell cell = row.getCell(10);
+	    Cell cell = row.getCell(8);
 	    if(cell==null)
-	    	cell =  row.createCell(10);
+	    	cell =  row.createCell(8);
 	    cell.setCellValue(sheetCountNum);
+	    fileEntity.setCountNum(String.valueOf(sheetCountNum));
 	    
 	    row = sheet.getRow(rowNum);
 	    cell = row.getCell(9);
@@ -356,6 +380,8 @@ public class ExcelUtil {
 	    if(cell.getCellType() == Cell.CELL_TYPE_FORMULA)
 	    	throw new NumberFormatException("第"+(rowNum+1)+"行K列总金额不需要求和,把求和公式删了");
 	    cell.setCellValue(decimalFormat.format(sheetcountValue_10));
+	    fileEntity.setTotalActual(String.format("%.2f",sheetcountValue_10));
+	    
 	    
 		row = sheet.getRow(rowNum);
 	    cell = row.getCell(13);
@@ -368,6 +394,7 @@ public class ExcelUtil {
 	    if(cell==null)
 	    	cell =  row.createCell(14);
 	    cell.setCellValue(decimalFormat.format(sheetcountValue_14));
+	    fileEntity.setTotalExpect(String.format("%.2f",sheetcountValue_14));
 		
 		row = sheet.getRow(rowNum);
 	    cell = row.getCell(1);
@@ -381,6 +408,7 @@ public class ExcelUtil {
         out.flush();
         out.close();
         in.close();
+        return fileEntity;
 	}  
 	
 	/**

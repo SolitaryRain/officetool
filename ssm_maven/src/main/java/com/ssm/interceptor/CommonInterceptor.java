@@ -11,7 +11,6 @@ public class CommonInterceptor implements HandlerInterceptor  {
 	  private final String ADMINSESSION = "userToken";  
 	  //拦截前处理  
 	  public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object obj) throws Exception {  
-		  System.out.println(request.getRequestURI());
 		if(StringUtils.contains(request.getRequestURI(), "login"))
 			return true;
 	    Object sessionObj = request.getSession().getAttribute(ADMINSESSION);  

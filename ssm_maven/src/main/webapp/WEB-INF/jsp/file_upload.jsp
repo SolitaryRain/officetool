@@ -1,28 +1,17 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%
-String path = request.getContextPath();
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-%>
-
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
-    <base href="<%=basePath%>">
     
-	<meta http-equiv="pragma" content="no-cache">
+	<title>文件上传</title>
+    <meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
-    <meta name="keywords" content="">
-    <meta name="description" content="">
-	<title>文件上传</title>
-	
-    <link rel="shortcut icon" href="favicon.ico"> 
-    <link href="${pageContext.request.contextPath}/assets/templetHtml/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/templetHtml/css/font-awesome.css?v=4.4.0" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/templetHtml/css/animate.css" rel="stylesheet">
+	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+	<meta http-equiv="description" content="Excel">
+	<%@ include  file="commonCss.jspf"%>
     <link href="${pageContext.request.contextPath}/assets/templetHtml/css/plugins/dropzone/basic.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/assets/templetHtml/css/plugins/dropzone/dropzone.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/templetHtml/css/style.css?v=4.1.0" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/assets/templetHtml/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
 
 </head>
@@ -48,11 +37,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
 
     <!-- 全局js -->
-    <script src="${pageContext.request.contextPath}/assets/templetHtml/js/jquery.min.js?v=2.1.4"></script>
-    <script src="${pageContext.request.contextPath}/assets/templetHtml/js/bootstrap.min.js?v=3.3.6"></script>
-
-
-
+    <%@ include  file="commonJs.jspf"%>
     <!-- 自定义js -->
     <script src="${pageContext.request.contextPath}/assets/templetHtml/js/content.js?v=1.0.0"></script>
     <script src="${pageContext.request.contextPath}/assets/templetHtml/js/plugins/sweetalert/sweetalert.min.js"></script>
@@ -69,9 +54,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
                   addRemoveLinks: true,
                   autoProcessQueue:false,
-                  parallelUploads:8,
+                  parallelUploads:1,
                   maxFiles: 1,//最大可上传的文件个数
-                  maxFilesize: 20,
+                  maxFilesize: 200,
+                  uploadMultiple:false,
                   acceptedFiles: ".xlsx", //上传的类型
                 // Dropzone settings
                 init: function () {
@@ -105,7 +91,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         });
                 	}else{
                 		 file.previewElement.classList.add("dz-success");
-                         swal({
+                        swal({
                              title: "上传成功",
                              text: "随便了，没啥说的",
                              type: "success",  

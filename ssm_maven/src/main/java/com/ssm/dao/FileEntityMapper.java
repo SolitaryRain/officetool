@@ -93,4 +93,6 @@ public interface FileEntityMapper {
      * @mbg.generated
      */
     int updateByPrimaryKey(FileEntity record);
+
+	FileEntity selectCount();
 }
